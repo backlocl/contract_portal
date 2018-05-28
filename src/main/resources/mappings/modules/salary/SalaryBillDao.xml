@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.salary.dao.SalaryBillDao">
+    
+	<sql id="salaryBillColumns">
+		a.id AS "id",
+		a.salary_month AS "salaryMonth",
+		a.company AS "company",
+		a.name AS "name",
+		a.mail AS "mail",
+		a.fix_salary AS "fixSalary",
+		a.floating_salary AS "floatingSalary",
+		a.debit AS "debit",
+		a.reissue AS "reissue",
+		a.should_pay AS "shouldPay",
+		a.acc_fund AS "accFund",
+		a.social_security AS "socialSecurity",
+		a.other_subsidy AS "otherSubsidy",
+		a.other_debig AS "otherDebig",
+		a.net_should_pay AS "netShouldPay",
+		a.person_income_tax AS "personIncomeTax",
+		a.real_pay AS "realPay",
+		a.remark AS "remark",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="salaryBillJoins">
+	</sql>
+    
+	<select id="get" resultType="SalaryBill">
+		SELECT 
+			<include refid="salaryBillColumns"/>
+		FROM salary_bill a
+		<include refid="salaryBillJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="listAllSalaryMonth" resultType="String">
+		SELECT DISTINCT a.salary_month FROM salary_bill a
+		ORDER BY a.salary_month DESC
+	</select>
+	
+	<select id="getBySalaryMonthAndNameAndMail" resultType="SalaryBill">
+		SELECT 
+			<include refid="salaryBillColumns"/>
+		FROM salary_bill a
+		WHERE a.salary_month = #{salaryMonth} AND a.name = #{name} AND a.mail = #{mail}
+	</select>
+	
+	<select id="findList" resultType="SalaryBill">
+		SELECT 
+			<include refid="salaryBillColumns"/>
+		FROM salary_bill a
+		<include refid="salaryBillJoins"/>
+		<where>
+			
+			<if test="salaryMonth != null and salaryMonth != ''">
+				AND a.salary_month = #{salaryMonth}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SalaryBill">
+		SELECT 
+			<include refid="salaryBillColumns"/>
+		FROM salary_bill a
+		<include refid="salaryBillJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO salary_bill(
+			salary_month,
+			company,
+			name,
+			mail,
+			fix_salary,
+			floating_salary,
+			debit,
+			reissue,
+			should_pay,
+			acc_fund,
+			social_security,
+			other_subsidy,
+			other_debig,
+			net_should_pay,
+			person_income_tax,
+			real_pay,
+			remark,
+			create_time,
+			update_time
+		) VALUES (
+			#{salaryMonth},
+			#{company},
+			#{name},
+			#{mail},
+			#{fixSalary},
+			#{floatingSalary},
+			#{debit},
+			#{reissue},
+			#{shouldPay},
+			#{accFund},
+			#{socialSecurity},
+			#{otherSubsidy},
+			#{otherDebig},
+			#{netShouldPay},
+			#{personIncomeTax},
+			#{realPay},
+			#{remark},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE salary_bill SET 	
+			salary_month = #{salaryMonth},
+			company = #{company},
+			name = #{name},
+			mail = #{mail},
+			fix_salary = #{fixSalary},
+			floating_salary = #{floatingSalary},
+			debit = #{debit},
+			reissue = #{reissue},
+			should_pay = #{shouldPay},
+			acc_fund = #{accFund},
+			social_security = #{socialSecurity},
+			other_subsidy = #{otherSubsidy},
+			other_debig = #{otherDebig},
+			net_should_pay = #{netShouldPay},
+			person_income_tax = #{personIncomeTax},
+			real_pay = #{realPay},
+			remark = #{remark},
+			update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM salary_bill
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
