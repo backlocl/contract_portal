@@ -30,14 +30,14 @@
 		<li class="active"><a href="${ctx}/salary/salaryBillView/authCheck">工资条查询</a></li>
 	</ul><br/>
 	<form:form id="inputForm" class="form-horizontal" method="post" action="${ctx}/salary/salaryBillView/view">
-		<sys:message content="${message}"/>		
+		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">工资属期：</label>
 			<div class="controls">
 				<select name="salaryMonth" class="input-xlarge required">
-				<c:forEach items="${salaryMonthList}" var="list">  
-		        	<option value="${list}">${list}</option>  
-		        </c:forEach>  
+				<c:forEach items="${salaryMonthList}" var="list">
+		        	<option value="${list}">${list}</option>
+		        </c:forEach>
 		        </select>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>

@@ -892,7 +892,15 @@
 				<version>2.10</version>
 			</plugin>
 		</plugins>
-	</build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 	
 	<profiles>
 		<!-- 初始化数据库 -->			
