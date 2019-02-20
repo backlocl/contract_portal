@@ -91,8 +91,6 @@ public class SalaryBillViewController extends BaseController {
 			}
 			model.addAttribute("salaryBill", salaryBill);
 			return "modules/salary/salaryBillView";
-//			我
-            
 		}catch(Exception e) {
 			addMessage(redirectAttributes, "查询失败！失败信息："+e.getMessage());
 		}
